@@ -68,4 +68,12 @@ tags: 效率
 ![使用代码片段](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-bdf3cd71-1e2a-4583-b759-8239cf991f4c/2e0e44c0-e423-4aa8-a50b-e7e87144478d.gif)
 
 
-<!-- https://snippet-generator.app/?description= -->
+### 4. 一个生成片段的小工具
+
+把代码片段放进去，然后复制到代码片段里。 主要是片段body里面每一行都加引号，手动加就比较麻烦，用这个工具直接就生成好了。
+
+[https://snippet-generator.app](https://snippet-generator.app)
+
+*****
+
+END
