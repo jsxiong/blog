@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>js-copy</title>
+    <link href="/blog/2022/10/10/js-copy/"/>
+    <url>/blog/2022/10/10/js-copy/</url>
+    
+    <content type="html"><![CDATA[<h3 id="原生js实现复制"><a href="#原生js实现复制" class="headerlink" title="原生js实现复制"></a>原生js实现复制</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">onCopy</span>(<span class="hljs-params">text</span>) &#123;<br>  <span class="hljs-keyword">const</span> input = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;input&#x27;</span>);<br>  input.<span class="hljs-property">value</span> = text<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(input)<br>  input.<span class="hljs-title function_">select</span>()<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">execCommand</span>(<span class="hljs-string">&#x27;Copy&#x27;</span>) <br>  input.<span class="hljs-title function_">remove</span>()<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>js基础</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>vue中的keep-alive组件</title>
     <link href="/blog/2022/09/20/vue%E4%B8%AD%E7%9A%84keep-alive%E7%BB%84%E4%BB%B6/"/>
     <url>/blog/2022/09/20/vue%E4%B8%AD%E7%9A%84keep-alive%E7%BB%84%E4%BB%B6/</url>
