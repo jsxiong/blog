@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>使用nginx解决跨域</title>
+    <link href="/blog/2022/11/10/%E4%BD%BF%E7%94%A8nginx%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F/"/>
+    <url>/blog/2022/11/10/%E4%BD%BF%E7%94%A8nginx%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F/</url>
+    
+    <content type="html"><![CDATA[<h4 id="若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx-conf文件进行配置"><a href="#若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx-conf文件进行配置" class="headerlink" title="若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx.conf文件进行配置"></a>若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx.conf文件进行配置</h4><h5 id="配置如下"><a href="#配置如下" class="headerlink" title="配置如下"></a>配置如下</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">server &#123;<br>     listen       80;<br>     server_name  localhost;<br><br>     <span class="hljs-comment">#charset koi8-r;</span><br><br>     <span class="hljs-comment">#access_log  logs/host.access.log  main;</span><br><br>     location / &#123;<br>         root   html;<br>         index  index.html index.htm;<br>         proxy_pass http://127.0.0.1:5500;<br>     &#125;<br><br>     location /fetch &#123;<br>         proxy_pass https://hotlist.imtt.qq.com/Fetch;<br>     &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="此时在项目中直接请求-x2F-fetch-这个接口路径就行了，-请求127-0-0-1-x2F-fetch相当于https-hotlist-imtt-qq-com-Fetch"><a href="#此时在项目中直接请求-x2F-fetch-这个接口路径就行了，-请求127-0-0-1-x2F-fetch相当于https-hotlist-imtt-qq-com-Fetch" class="headerlink" title="此时在项目中直接请求 &#x2F;fetch 这个接口路径就行了， 请求127.0.0.1&#x2F;fetch相当于https://hotlist.imtt.qq.com/Fetch"></a>此时在项目中直接请求 &#x2F;fetch 这个接口路径就行了， 请求127.0.0.1&#x2F;fetch相当于<a href="https://hotlist.imtt.qq.com/Fetch">https://hotlist.imtt.qq.com/Fetch</a></h3>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>js-copy</title>
     <link href="/blog/2022/10/10/js-copy/"/>
     <url>/blog/2022/10/10/js-copy/</url>

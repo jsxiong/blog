@@ -16,24 +16,23 @@
   <meta name="author" content="Yu bin Xiong">
   <meta name="keywords" content="">
   
-    <meta name="description" content="原生js实现复制12345678function onCopy(text) &amp;#123;  const input &#x3D; document.createElement(&amp;#x27;input&amp;#x27;);  input.value &#x3D; text  document.body.appendChild(input)  input.select()  document.execCommand(&amp;#x27">
+    <meta name="description" content="若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx.conf文件进行配置配置如下123456789101112131415161718server &amp;#123;     listen       80;     server_name  localhost;     #charset koi8-r;     #access_log  logs&#x2F;hos">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js-copy">
-<meta property="og:url" content="https://jsxiong.github.io/web/2022/10/10/js-copy/index.html">
+<meta property="og:title" content="使用nginx解决跨域">
+<meta property="og:url" content="https://jsxiong.github.io/web/2022/11/10/%E4%BD%BF%E7%94%A8nginx%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F/index.html">
 <meta property="og:site_name" content="xiong&#39;s web">
-<meta property="og:description" content="原生js实现复制12345678function onCopy(text) &amp;#123;  const input &#x3D; document.createElement(&amp;#x27;input&amp;#x27;);  input.value &#x3D; text  document.body.appendChild(input)  input.select()  document.execCommand(&amp;#x27">
+<meta property="og:description" content="若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx.conf文件进行配置配置如下123456789101112131415161718server &amp;#123;     listen       80;     server_name  localhost;     #charset koi8-r;     #access_log  logs&#x2F;hos">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-10T03:43:08.000Z">
-<meta property="article:modified_time" content="2022-10-10T03:55:38.670Z">
+<meta property="article:published_time" content="2022-11-10T09:34:47.000Z">
+<meta property="article:modified_time" content="2022-11-10T09:41:02.407Z">
 <meta property="article:author" content="Yu bin Xiong">
-<meta property="article:tag" content="js基础">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>js-copy - xiong&#39;s web</title>
+  <title>使用nginx解决跨域 - xiong&#39;s web</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -210,7 +209,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="js-copy"></span>
+            <span id="subtitle" data-typed-text="使用nginx解决跨域"></span>
           
         </div>
 
@@ -221,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-10 11:43" pubdate>
-          2022年10月10日 中午
+        <time datetime="2022-11-10 17:34" pubdate>
+          2022年11月10日 下午
         </time>
       </span>
     
@@ -233,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          215 字
+          436 字
         
       </span>
     
@@ -244,7 +243,7 @@
         
         
         
-          1 分钟
+          2 分钟
         
       </span>
     
@@ -282,12 +281,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">js-copy</h1>
+            <h1 style="display: none">使用nginx解决跨域</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="原生js实现复制"><a href="#原生js实现复制" class="headerlink" title="原生js实现复制"></a>原生js实现复制</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">onCopy</span>(<span class="hljs-params">text</span>) &#123;<br>  <span class="hljs-keyword">const</span> input = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;input&#x27;</span>);<br>  input.<span class="hljs-property">value</span> = text<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(input)<br>  input.<span class="hljs-title function_">select</span>()<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">execCommand</span>(<span class="hljs-string">&#x27;Copy&#x27;</span>) <br>  input.<span class="hljs-title function_">remove</span>()<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h4 id="若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx-conf文件进行配置"><a href="#若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx-conf文件进行配置" class="headerlink" title="若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx.conf文件进行配置"></a>若没有nginx，先安装nginx。安装解压后在nginx的目录下打开conf文件夹下的nginx.conf文件进行配置</h4><h5 id="配置如下"><a href="#配置如下" class="headerlink" title="配置如下"></a>配置如下</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">server &#123;<br>     listen       80;<br>     server_name  localhost;<br><br>     <span class="hljs-comment">#charset koi8-r;</span><br><br>     <span class="hljs-comment">#access_log  logs/host.access.log  main;</span><br><br>     location / &#123;<br>         root   html;<br>         index  index.html index.htm;<br>         proxy_pass http://127.0.0.1:5500;<br>     &#125;<br><br>     location /fetch &#123;<br>         proxy_pass https://hotlist.imtt.qq.com/Fetch;<br>     &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="此时在项目中直接请求-x2F-fetch-这个接口路径就行了，-请求127-0-0-1-x2F-fetch相当于https-hotlist-imtt-qq-com-Fetch"><a href="#此时在项目中直接请求-x2F-fetch-这个接口路径就行了，-请求127-0-0-1-x2F-fetch相当于https-hotlist-imtt-qq-com-Fetch" class="headerlink" title="此时在项目中直接请求 &#x2F;fetch 这个接口路径就行了， 请求127.0.0.1&#x2F;fetch相当于https://hotlist.imtt.qq.com/Fetch"></a>此时在项目中直接请求 &#x2F;fetch 这个接口路径就行了， 请求127.0.0.1&#x2F;fetch相当于<a target="_blank" rel="noopener" href="https://hotlist.imtt.qq.com/Fetch">https://hotlist.imtt.qq.com/Fetch</a></h3>
                 
               </div>
             
@@ -295,13 +296,6 @@
             <div>
               <div class="post-metas my-3">
   
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/blog/tags/js%E5%9F%BA%E7%A1%80/">#js基础</a>
-      
-    </div>
   
 </div>
 
@@ -311,8 +305,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>js-copy</div>
-      <div>https://jsxiong.github.io/web/2022/10/10/js-copy/</div>
+      <div>使用nginx解决跨域</div>
+      <div>https://jsxiong.github.io/web/2022/11/10/使用nginx解决跨域/</div>
     </div>
     <div class="license-meta">
       
@@ -324,7 +318,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月10日</div>
+          <div>2022年11月10日</div>
         </div>
       
       
@@ -354,18 +348,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2022/11/10/%E4%BD%BF%E7%94%A8nginx%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F/" title="使用nginx解决跨域">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用nginx解决跨域</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2022/09/20/vue%E4%B8%AD%E7%9A%84keep-alive%E7%BB%84%E4%BB%B6/" title="vue中的keep-alive组件">
-                        <span class="hidden-mobile">vue中的keep-alive组件</span>
+                      <a href="/blog/2022/10/10/js-copy/" title="js-copy">
+                        <span class="hidden-mobile">js-copy</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
