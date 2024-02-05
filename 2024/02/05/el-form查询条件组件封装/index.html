@@ -1,0 +1,654 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu bin Xiong">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="大致代码如下12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010">
+<meta property="og:type" content="article">
+<meta property="og:title" content="el-form查询条件组件封装">
+<meta property="og:url" content="https://jsxiong.github.io/web/2024/02/05/el-form%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E7%BB%84%E4%BB%B6%E5%B0%81%E8%A3%85/index.html">
+<meta property="og:site_name" content="xiong&#39;s web">
+<meta property="og:description" content="大致代码如下12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-05T07:16:51.000Z">
+<meta property="article:modified_time" content="2024-02-05T07:18:48.769Z">
+<meta property="article:author" content="Yu bin Xiong">
+<meta property="article:tag" content="element-ui">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>el-form查询条件组件封装 - xiong&#39;s web</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jsxiong.github.io","root":"/blog/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#145dff","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>JSXIONG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/quotes/">
+                
+                言论
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="el-form查询条件组件封装"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-02-05 15:16" pubdate>
+          2024年2月5日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">el-form查询条件组件封装</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="大致代码如下"><a href="#大致代码如下" class="headerlink" title="大致代码如下"></a>大致代码如下</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;template&gt;<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;search-form-component&quot;</span> <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;`margin-bottom: $&#123;marginBottom&#125;px;`&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">el-form</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;form&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;!autoSearch &amp;&amp; &#x27;flex-form&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">:model</span>=<span class="hljs-string">&quot;form&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">inline</span></span></span><br><span class="hljs-tag"><span class="language-xml">      &gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;searchFormZone&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;[&#x27;zone-form-items&#x27;]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;currentHeight &amp;&amp; `height: $&#123;currentHeight&#125;;`&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        &gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">el-form-item</span></span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(item, index) in formData&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;index&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-item&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">:label</span>=<span class="hljs-string">&quot;item.label&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">:label-width</span>=<span class="hljs-string">&quot;(isLockLabelWidth ? lockLabelWidthValue : (item.labelWidth || labelWidth)) + &#x27;px&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          &gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">el-input</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;item.type === &#x27;input&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;form[item.prop]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;&#123;&#x27;width&#x27;: `$&#123;(item.width || searchWidth)&#125;px`&#125;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:clearable</span>=<span class="hljs-string">&quot;item.clearable || true&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:placeholder</span>=<span class="hljs-string">&quot;`请输入$&#123;item.label&#125;`&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              @<span class="hljs-attr">input</span>=<span class="hljs-string">&quot;changeValue($event, item.prop)&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              @<span class="hljs-attr">keyup.enter.native</span>=<span class="hljs-string">&quot;doSearch&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">el-select</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;item.type === &#x27;select&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;form[item.prop]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;&#123;&#x27;width&#x27;: `$&#123;(item.width || searchWidth)&#125;px`&#125;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:multiple</span>=<span class="hljs-string">&quot;item.multiple || false&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:collapse-tags</span>=<span class="hljs-string">&quot;item.collapseTag || true&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:placeholder</span>=<span class="hljs-string">&quot;`请选择$&#123;item.label&#125;`&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:clearable</span>=<span class="hljs-string">&quot;item.clearable || true&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">               <span class="hljs-attr">:disabled</span>=<span class="hljs-string">&quot;item.disabled&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:filterable</span>=<span class="hljs-string">&quot;item.filterable || true&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              @<span class="hljs-attr">change</span>=<span class="hljs-string">&quot;changeValue($event, item.prop)&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            &gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">el-option</span></span></span><br><span class="hljs-tag"><span class="language-xml">                <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(ops, idx) in selectOptions(item)&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">                <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;idx&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">                <span class="hljs-attr">:label</span>=<span class="hljs-string">&quot;ops[(item.selectProps &amp;&amp; item.selectProps.label) ? item.selectProps.label : &#x27;label&#x27;]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">                <span class="hljs-attr">:value</span>=<span class="hljs-string">&quot;ops[(item.selectProps &amp;&amp; item.selectProps.value) ? item.selectProps.value : &#x27;value&#x27;]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">el-select</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">TypeSelect</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;item.type === &#x27;typeSelect&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;form[item.prop]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;&#123;&#x27;width&#x27;: `$&#123;(item.width || searchWidth)&#125;px`&#125;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:search-param</span>=<span class="hljs-string">&quot;item.searchParam || item.label&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:url-name</span>=<span class="hljs-string">&quot;item.urlName || &#x27;getDictByType&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:placeholder-lable</span>=<span class="hljs-string">&quot;item.label&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              @<span class="hljs-attr">handleChange</span>=<span class="hljs-string">&quot;changeValue($event, item.prop)&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">ElDragSelect</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;item.type === &#x27;ElDragSelect&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;form[item.prop]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;&#123;&#x27;width&#x27;: `$&#123;(item.width || searchWidth)&#125;px`&#125;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">url-name</span>=<span class="hljs-string">&quot;listBaseType&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:placeholder-lable</span>=<span class="hljs-string">&quot;item.label&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:show-option</span>=<span class="hljs-string">&quot;item.showOption&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            /&gt;</span></span><br><span class="language-xml">  </span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">el-date-picker</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;item.type === &#x27;daterange&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;form[item.prop]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:clearable</span>=<span class="hljs-string">&quot;item.clearable || true&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:type</span>=<span class="hljs-string">&quot;item.datetime ? &#x27;datetimerange&#x27; : &#x27;daterange&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;&#123;&#x27;width&#x27;: `$&#123;(item.width || searchWidth)&#125;px`&#125;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">value-format</span>=<span class="hljs-string">&quot;timestamp&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">start-placeholder</span>=<span class="hljs-string">&quot;开始日期&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">end-placeholder</span>=<span class="hljs-string">&quot;结束日期&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:default-time</span>=<span class="hljs-string">&quot;[&#x27;00:00:00&#x27;, &#x27;23:59:59&#x27;]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              @<span class="hljs-attr">change</span>=<span class="hljs-string">&quot;changeValue($event, item.prop, item.type)&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">el-date-picker</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;item.type === &#x27;date&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;form[item.prop]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;&#123;&#x27;width&#x27;: `$&#123;(item.width || searchWidth)&#125;px`&#125;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:type</span>=<span class="hljs-string">&quot;item.datetime ? &#x27;datetime&#x27; : &#x27;date&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">value-format</span>=<span class="hljs-string">&quot;timestamp&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:placeholder</span>=<span class="hljs-string">&quot;`请选择$&#123;item.label&#125;`&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              @<span class="hljs-attr">change</span>=<span class="hljs-string">&quot;changeValue($event, item.prop)&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">el-time-picker</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;item.type === &#x27;time&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;form[item.prop]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;&#123;&#x27;width&#x27;: `$&#123;(item.width || searchWidth)&#125;px`&#125;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">value-format</span>=<span class="hljs-string">&quot;HH:mm&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">format</span>=<span class="hljs-string">&quot;HH:mm&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:placeholder</span>=<span class="hljs-string">&quot;`请选择$&#123;item.label&#125;`&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              @<span class="hljs-attr">change</span>=<span class="hljs-string">&quot;changeValue($event, item.prop)&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            /&gt;</span></span><br><span class="language-xml">  </span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">el-input</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;item.type === &#x27;dialogSelect&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;form[item.prop]&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:placeholder</span>=<span class="hljs-string">&quot;`请选择$&#123;item.label&#125;`&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;&#123;&#x27;width&#x27;: `$&#123;(item.width || searchWidth)&#125;px`&#125;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">readonly</span></span></span><br><span class="hljs-tag"><span class="language-xml">            &gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">el-button</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&quot;append&quot;</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;el-icon-search&quot;</span> /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">el-input</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">el-form-item</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-comment">&lt;!-- 右侧固定按钮 --&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;!autoSearch&quot;</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;[&#x27;zone-search&#x27;, isFoldable &amp;&amp; &#x27;foldable&#x27;]&quot;</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">el-form-item</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-item&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">el-button</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isFoldable&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:icon</span>=<span class="hljs-string">&quot;isFold ? &#x27;el-icon-arrow-down&#x27; : &#x27;el-icon-arrow-up&#x27;&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;doToggleFold&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            &gt;</span></span><br><span class="language-xml">              &#123;&#123; isFold ? &#x27;展 开&#x27; : &#x27;收 起&#x27; &#125;&#125;</span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">el-button</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">el-button</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;el-icon-search&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;primary&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;doSearch&quot;</span>&gt;</span>搜索<span class="hljs-tag">&lt;/<span class="hljs-name">el-button</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">el-button</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;el-icon-refresh&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;resetForm&quot;</span>&gt;</span>重置<span class="hljs-tag">&lt;/<span class="hljs-name">el-button</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">el-form-item</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">el-form</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  &lt;/template&gt;<br>  <br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;SearchForm&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">props</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">value</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Object</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-function">() =&gt;</span> (&#123;&#125;)</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">formData</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 格式</span></span></span><br><span class="hljs-comment"><span class="language-javascript"><span class="language-xml">           * [&#123; label: &quot;label&quot;, prop: &quot;prop&quot;, type: &quot;input&quot; &#125;]</span></span></span><br><span class="hljs-comment"><span class="language-javascript"><span class="language-xml">           * ps: label、prop、type 必传</span></span></span><br><span class="hljs-comment"><span class="language-javascript"><span class="language-xml">           * */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Array</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">formName</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;query&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">labelWidth</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Number</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-number">85</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// 是否锁定label的宽度（锁定宽度可实现上下对齐）</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">isLockLabelWidth</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Boolean</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-literal">false</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// 锁定宽度值</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">lockLabelWidthValue</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Number</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-number">75</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">marginBottom</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Number</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-number">0</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">autoSearch</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// 是否开启自动搜素</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Boolean</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-literal">false</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// 超出一行后是否默认折叠</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">folded</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Boolean</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-literal">true</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// 点击重置时不需要清空的参数</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">resetExcludesParams</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Array</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-function">() =&gt;</span> []</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// 父组件的查询事件名称</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">queryMethodsName</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;search&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">searchWidth</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">Number</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-number">200</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">form</span>: &#123;&#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">isFoldable</span>: <span class="hljs-literal">false</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">isFold</span>: <span class="hljs-literal">false</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">currentHeight</span>: <span class="hljs-string">&#x27;&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">offsetHeight</span>: <span class="hljs-number">30</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">watch</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">value</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">handler</span>(<span class="hljs-params">v</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(v).<span class="hljs-property">length</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-variable language_">this</span>.<span class="hljs-property">form</span> = &#123; ...v &#125;</span></span><br><span class="language-javascript"><span class="language-xml">          &#125;</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">immediate</span>: <span class="hljs-literal">true</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">deep</span>: <span class="hljs-literal">true</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">isFold</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">handler</span>(<span class="hljs-params">newVal</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentHeight</span> = newVal ? <span class="hljs-string">&#x27;40px&#x27;</span> : <span class="hljs-variable language_">this</span>.<span class="hljs-property">offsetHeight</span></span></span><br><span class="language-javascript"><span class="language-xml">        &#125;</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">mounted</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getFoldable</span>()</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">isFoldable</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">isFold</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">folded</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">window</span>.<span class="hljs-property">onresize</span> = <span class="hljs-function">() =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentHeight</span> = <span class="hljs-string">&#x27;&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.$nextTick(<span class="hljs-variable language_">this</span>.<span class="hljs-property">getFoldable</span>)</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">beforeDestroy</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">window</span>.<span class="hljs-property">onresize</span> = <span class="hljs-literal">null</span></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">methods</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">getFoldable</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>.<span class="hljs-property">searchFormZone</span>) <span class="hljs-keyword">return</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">const</span> offsetHeight = <span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>.<span class="hljs-property">searchFormZone</span>.<span class="hljs-property">offsetHeight</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">offsetHeight</span> = offsetHeight + <span class="hljs-string">&#x27;px&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">isFoldable</span> = !<span class="hljs-variable language_">this</span>.<span class="hljs-property">autoSearch</span> &amp;&amp; (offsetHeight &gt; <span class="hljs-number">60</span>)</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentHeight</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">isFold</span> ? <span class="hljs-string">&#x27;60px&#x27;</span> : <span class="hljs-variable language_">this</span>.<span class="hljs-property">offsetHeight</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">doToggleFold</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">isFold</span> = !<span class="hljs-variable language_">this</span>.<span class="hljs-property">isFold</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">doSearch</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">$listeners</span>[<span class="hljs-string">&#x27;query&#x27;</span>]) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;query&#x27;</span>)</span></span><br><span class="language-javascript"><span class="language-xml">        &#125; <span class="hljs-keyword">else</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">queryMethodsName</span>]()</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">selectOptions</span>(<span class="hljs-params">item</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">const</span> parentOptions = item.<span class="hljs-property">selectProps</span> &amp;&amp; item.<span class="hljs-property">selectProps</span>.<span class="hljs-property">optionName</span></span></span><br><span class="language-javascript"><span class="language-xml">          ? item.<span class="hljs-property">selectProps</span>.<span class="hljs-property">optionName</span></span></span><br><span class="language-javascript"><span class="language-xml">          : <span class="hljs-string">`<span class="hljs-subst">$&#123;item.prop&#125;</span>Options`</span></span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">123123</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>,<span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[parentOptions])</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">return</span> item.<span class="hljs-property">options</span> || <span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[parentOptions]</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">changeValue</span>(<span class="hljs-params">value, prop, type</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">if</span> (type === <span class="hljs-string">&#x27;daterange&#x27;</span> &amp;&amp; <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(prop)) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-keyword">const</span> [start, end] = prop</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-keyword">const</span> val1 = <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(value) ? value[<span class="hljs-number">0</span>] : <span class="hljs-literal">null</span></span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-keyword">const</span> val2 = <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(value) ? value[<span class="hljs-number">1</span>] : <span class="hljs-literal">null</span></span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">formName</span>], start, val1)</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">formName</span>], end, val2)</span></span><br><span class="language-javascript"><span class="language-xml">        &#125; <span class="hljs-keyword">else</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">formName</span>], prop, value)</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">formName</span>].<span class="hljs-property">pageNo</span> = <span class="hljs-number">1</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">autoSearch</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">doSearch</span>()</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">resetForm</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">formData</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-keyword">const</span> &#123; prop, label, defaultValue &#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">formData</span>[key]</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">resetExcludesParams</span>.<span class="hljs-title function_">includes</span>(label)) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(prop)) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">              <span class="hljs-keyword">const</span> [start, end] = prop</span></span><br><span class="language-javascript"><span class="language-xml">              <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">formData</span>[key], <span class="hljs-string">&#x27;dateRange&#x27;</span>, []) <span class="hljs-comment">// 清空日期区间组件</span></span></span><br><span class="language-javascript"><span class="language-xml">              <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">formName</span>], start, <span class="hljs-literal">null</span>)</span></span><br><span class="language-javascript"><span class="language-xml">              <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">formName</span>], end, <span class="hljs-literal">null</span>)</span></span><br><span class="language-javascript"><span class="language-xml">            &#125; <span class="hljs-keyword">else</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">              <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">form</span>, prop, <span class="hljs-literal">null</span>)</span></span><br><span class="language-javascript"><span class="language-xml">              <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">formName</span>], prop, defaultValue || <span class="hljs-literal">null</span>)</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;</span></span><br><span class="language-javascript"><span class="language-xml">          &#125;</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;reset&#x27;</span>)</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">doSearch</span>()</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// 供父组件调用清空</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">clearSearchItem</span>(<span class="hljs-params">item</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">form</span>, item, <span class="hljs-literal">null</span>)</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml">  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br>  <br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;scss&quot;</span> <span class="hljs-attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="language-css"><span class="language-xml">      <span class="hljs-selector-class">.search-form-component</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-attribute">background</span>: <span class="hljs-number">#fff</span>;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span> <span class="hljs-number">20px</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.form-item</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">          <span class="hljs-attribute">margin</span>: <span class="hljs-number">4px</span> <span class="hljs-number">6px</span> <span class="hljs-number">4px</span> <span class="hljs-number">0</span>;</span></span><br><span class="language-css"><span class="language-xml">          <span class="hljs-attribute">width</span>: auto <span class="hljs-meta">!important</span>;</span></span><br><span class="language-css"><span class="language-xml">          <span class="hljs-attribute">display</span>: inline-block;</span></span><br><span class="language-css"><span class="language-xml">        &#125;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.flex-form</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">          <span class="hljs-attribute">display</span>: flex;</span></span><br><span class="language-css"><span class="language-xml">          <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.zone-form-items</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">display</span>: block;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">overflow-y</span>: hidden;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">transition</span>: height .<span class="hljs-number">3s</span>;</span></span><br><span class="language-css"><span class="language-xml">        &#125;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.zone-search</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">          <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;</span></span><br><span class="language-css"><span class="language-xml">          &amp;<span class="hljs-selector-class">.foldable</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">width</span>: <span class="hljs-number">244px</span>;</span></span><br><span class="language-css"><span class="language-xml">          &#125;</span></span><br><span class="language-css"><span class="language-xml">          &#125;</span></span><br><span class="language-css"><span class="language-xml">        &#125;</span></span><br><span class="language-css"><span class="language-xml">      &#125;</span></span><br><span class="language-css"><span class="language-xml">      </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br>  <br>  <br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/element-ui/">#element-ui</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>el-form查询条件组件封装</div>
+      <div>https://jsxiong.github.io/web/2024/02/05/el-form查询条件组件封装/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yu bin Xiong</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年2月5日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2022/11/10/%E4%BD%BF%E7%94%A8nginx%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F/" title="使用nginx解决跨域">
+                        <span class="hidden-mobile">使用nginx解决跨域</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.17/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"xIu47cRX0n5b5whIrCaOti2j-gzGzoHsz","appKey":"h6eKQeGiEDMKSzYZFZRvaffA","path":"window.location.pathname","placeholder":"说点什么...","avatar":"retro","meta":["nick"],"requiredFields":["nick"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
